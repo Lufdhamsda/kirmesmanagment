@@ -1,8 +1,6 @@
 package de.johannes.kirmes.views;
 
-import javax.swing.text.html.CSS;
-import javax.swing.text.html.ListView;
-
+import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.applayout.DrawerToggle;
 import com.vaadin.flow.component.dependency.CssImport;
@@ -12,15 +10,17 @@ import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
-import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.flow.component.tabs.Tabs;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.router.RouteAlias;
 import com.vaadin.flow.router.RouterLink;
+import com.vaadin.flow.theme.Theme;
+import com.vaadin.flow.theme.lumo.Lumo;
 import com.vaadin.flow.theme.lumo.LumoUtility;
 
+import de.johannes.kirmes.views.home.DashboardView;
 import de.johannes.kirmes.views.home.UserView;
 
 /**
@@ -61,15 +61,16 @@ public class MainView extends AppLayout {
 
 	private Tabs getTabs(){
 		Tabs tabs = new Tabs();
-		tabs.add(createTab(VaadinIcon.USER, "User"));
+		tabs.add(createTab(VaadinIcon.DASHBOARD, "Dashboard", DashboardView.class));
+		tabs.add(createTab(VaadinIcon.USER, "User", UserView.class));
 		tabs.setOrientation(Tabs.Orientation.VERTICAL);
 		return tabs;
 	}
 
-	private Tab createTab(VaadinIcon viewIcon, String tabName) {
+	private Tab createTab(VaadinIcon viewIcon, String tabName, Class<? extends Component> navigationClass) {
 
 		RouterLink link = new RouterLink();
-		link.setRoute(UserView.class);
+		link.setRoute(navigationClass);
 		link.setTabIndex(-1);
 
 		if (viewIcon != null) {

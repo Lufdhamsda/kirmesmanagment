@@ -1,6 +1,8 @@
 package de.johannes.kirmes.data.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,11 +41,28 @@ public class UserService {
 		return roleRepository.getAllRoleName();
 	}
 
+	public List<Role> getAllRoles(){
+		return roleRepository.findAll();
+	}
+
+	public Map<String, Long> getUserCountByRole(){
+		List<Object[]> results = userRepository.getUserCountByRole();
+		Map<String, Long> userCountByRole = new HashMap<>();
+		for (Object[] result : results) {
+			userCountByRole.put((String) result[0], (Long) result[1]);
+		}
+		return userCountByRole;
+	}
+
 	public void save(User user) {
 		userRepository.save(user);
 	}
 
 	public void delete(User user){
 		userRepository.delete(user);
+	}
+
+	public long getUserCount(){
+		return userRepository.count();
 	}
 }
